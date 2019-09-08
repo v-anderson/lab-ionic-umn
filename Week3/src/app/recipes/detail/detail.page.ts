@@ -19,7 +19,8 @@ export class DetailPage implements OnInit {
       paramMap => {
         if (!paramMap.has('recipeId')) { return; }
         this.loadedRecipe = this.recipesSvc.getRecipe(paramMap.get('recipeId'));
-      });
+      }
+      );
   }
 
   async presentAlert() {

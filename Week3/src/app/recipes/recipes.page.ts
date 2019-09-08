@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Recipe } from './recipes.model';
 import { RecipesService } from './recipes.service';
 
@@ -7,11 +7,11 @@ import { RecipesService } from './recipes.service';
   templateUrl: './recipes.page.html',
   styleUrls: ['./recipes.page.scss'],
 })
-export class RecipesPage implements OnInit {
+export class RecipesPage implements OnInit, OnDestroy {
 
   recipes: Recipe[];
 
-  constructor(private recipesService: RecipesService) { }
+  constructor(private recipesService: RecipesService, private changeRef: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.recipes = this.recipesService.getAllRecipes();
@@ -22,7 +22,29 @@ export class RecipesPage implements OnInit {
   }
 
   refresh(): void {
-    window.location.reload();
+    location.reload();
+  }
+
+  ionViewWillEnter(){
+    console.log('ionViewWillEnter');
+    this.recipes = this.recipesService.getAllRecipes();
+  }
+
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter');
+    // this.refresh();
+  }
+
+  ionViewWillLeave() {
+    console.log('ionViewWillLeave');
+  }
+
+  ionViewDidLeave() {
+    console.log('ionViewDidLeave');
+  }
+
+  ngOnDestroy() {
+    console.log('ngOnDestroy');
   }
 
 }
